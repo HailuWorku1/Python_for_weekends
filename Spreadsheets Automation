@@ -1,0 +1,34 @@
+import openpyxl
+
+def create_pivot_table(excel_file, sheet_name, pivot_table_data_range, pivot_table_fields):
+  """Creates a pivot table in the specified Excel file and sheet.
+
+  Args:
+    excel_file: The path to the Excel file.
+    sheet_name: The name of the sheet that contains the data for the pivot table.
+    pivot_table_data_range: The range of cells that contains the data for the pivot table.
+    pivot_table_fields: A list of the fields that should be included in the pivot table.
+  """
+
+  wb = openpyxl.load_workbook(excel_file)
+  sheet = wb[sheet_name]
+
+  pivot_table = sheet.pivot_table(
+      values=pivot_table_fields,
+      index=['Column1', 'Column2'],
+      sheet_name='PivotTable',
+      start_row=1,
+      start_col=1)
+
+  wb.save(excel_file)
+
+def main():
+  excel_file = 'example.xlsx'
+  sheet_name = 'Sheet1'
+  pivot_table_data_range = 'A1:C10'
+  pivot_table_fields = ['Column1', 'Column2']
+
+  create_pivot_table(excel_file, sheet_name, pivot_table_data_range, pivot_table_fields)
+
+if __name__ == '__main__':
+  main()
